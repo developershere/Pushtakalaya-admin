@@ -49,7 +49,7 @@ function UpdateCategory() {
                             <div className="form-group">
                                   
                                     <label className='text-black heading' style={{fontSize:'20px'}}>Category Name</label>
-                                    <input type="text" name="categoryName" onChange={(event)=>{SetUpdateCategory(event.target.value)}} className="form-control updateinput mt-3" placeholder={category.categoryName}/>
+                                    <input type="text" name="categoryName" onChange={(event)=>{SetUpdateCategory(event.target.value)}} className="form-control updateinput mt-3" defaultValue={category.categoryName}/>
                                     </div>
                                     <div className="form-group">
                                         <button type="submit" className="btn btn-primary">Update</button>

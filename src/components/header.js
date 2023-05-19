@@ -26,6 +26,17 @@ function Header(){
           </div>
         </form>
       </div>
+      <ul class="navbar-nav navbar-nav-right">
+          
+      <li class="nav-item">
+        <Link to='/signup' class="nav-link">
+          <span class="icon-bg"><i class="mdi mdi-account menu-icon"></i></span>
+          <span class="menu-title">Create New Admin</span>
+        </Link>
+      </li>
+           
+          </ul>
+      
      
       <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="offcanvas">
         <span class="mdi mdi-menu"></span>

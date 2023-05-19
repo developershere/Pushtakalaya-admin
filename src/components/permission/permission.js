@@ -1,18 +1,13 @@
 import { useEffect, useRef } from "react";
 import React, { useState } from 'react'
-
-
 import axios from "axios";
-
-
-
-
 import { toast } from "react-toastify";
 
 import { apiEndPoint } from "../../webapi/api";
 import Header from "../header";
 import SideBar from "../sidebar";
 import Footer from "../Footer";
+import { useNavigate } from "react-router-dom";
 
 
 function Permission() {
@@ -20,18 +15,21 @@ function Permission() {
     const [error, setError] = useState("");
     const [isLoading, setIsLoading] = useState(true);
     const [permission,setPermission] = useState("");
+    const navigate=useNavigate();
 
 
   const changePermission=async(product)=>{
-    window.alert(product);
-    console.log(product);
+   
     console.log(!product.permission?true:false)
     if(window.confirm("Are You Sure")){
    let response= await axios.post(apiEndPoint.REMOVE_BOOK,{id:product._id,name:product.name,description:product.description,
     author:product.author,language:product.language,edition:product.edition, publicationDate:product.publicationDate,pincode:452002,cityId:product.cityId,
     categoryId:product.categoryId,photos:product.photos,price:product.price,userId:product.userId,stateId:product.stateId,status:product.status,permission:(!product.permission?true:false)});
-   setData([...data,response.data.result]);
-   console.log(response.data.result);
+    console.log(response.data);
+    let index=data.findIndex((book)=>book._id==product._id)
+    data.splice(index,1)
+   setData([...data]);
+   console.log(response.data);
   }
 
   }
@@ -41,6 +39,7 @@ function Permission() {
         try {
             const response = await axios.get(apiEndPoint.TOTAL_BOOKS);
             if (response.data.status) {
+                console.log(response.data)
                 setData(response.data.bookList);
               
                 setIsLoading(false);
@@ -54,14 +53,14 @@ function Permission() {
 
 
     const removeBook = async (product) => {
-        console.log(product._id);
+        console.log(product);
 
         try {
             window.alert(product);
             if(window.confirm("Are You Sure")){
            let response= await axios.post(apiEndPoint.REMOVE_BOOK,{id:product._id,name:product.name,description:product.description,
             author:product.author,language:product.language,edition:product.edition, publicationDate:product.publicationDate,pincode:product.pincode,cityId:product.cityId,
-            categoryId:product.categoryId,photos:product.photos,price:product.price,userId:product.userId,stateId:product.stateId,status:"false"});
+            categoryId:product.categoryId,photos:product.photos,price:product.price,userId:product.userId,stateId:product.stateId,status:false});
            console.log(response.data)
             // toast.info("Category Remove Succesfully")
             // let index =  categoryList.findIndex((category)=>category._id==categoryId);
@@ -73,7 +72,10 @@ function Permission() {
         }
 
     }
-
+    const viewDescription = (book) => {
+        window.alert(book)
+       navigate("/viewDescription", { state: { bookDetails: book } })
+     }
 
 
     useEffect(() => {
@@ -118,9 +120,10 @@ function Permission() {
                         <tbody>
 
 
-                            {!error && data.filter((product)=>product.permission==false).map((product, index) => <tr>
+                            {data.filter((product)=>product.permission==false).map((product, index) => <tr>
                                 <td>{index + 1}</td>
-                                <td><img src={"https://drive.google.com/uc?export=view&id=" + product.photos.substring(32, product.photos.lastIndexOf("/"))} style={{ width: 60, height: 60 }} alt="" /></td>
+                               <td>{product.photos.split("@")[1] ? <img src={apiEndPoint.DISK_STORAGE+ product.photos.split("@")[1]} className="img-fluid  bookimg" onClick={()=>{viewDescription(product)}}/> : <img src={"https://drive.google.com/uc?export=view&id=" + product.photos.substring(32, product.photos.lastIndexOf("/"))} className="img-fluid  bookimg"  onClick={()=>{viewDescription(product)}} />}</td> 
+                            
                                 <td>{product.name.substring(0, 20)}</td>
                                 <td>{product.author.substring(0, 10)}</td>
 

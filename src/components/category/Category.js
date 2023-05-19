@@ -35,7 +35,7 @@ function Category() {
 
     const removeCategory = async (categoryId) => {
         try {
-            window.alert(categoryId);
+          
             if(window.confirm("Are You Sure")){
            let response= await axios.post(apiEndPoint.REMOVE_CATEGORY,{categoryId});
             toast.info("Category Remove Succesfully")

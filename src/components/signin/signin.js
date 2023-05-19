@@ -19,7 +19,7 @@ function SignIn(){
     event.preventDefault();
      let response= await axios.post(apiEndPoint.ADMIN_SIGNIN,{email,password});
       dispatch(setCurrentAdmin(response.data.admin));
-      toast.success("Sign Up Succesfully");
+      toast.success("Sign In  Succesfully");
       navigate("/home")
     }catch(err){
       toast.error("Oops Something Went Wrong");

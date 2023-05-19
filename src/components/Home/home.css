@@ -1,0 +1,236 @@
+/* .dashboardcard{
+    /* background-image: url("https://media.istockphoto.com/id/157169286/photo/notes-on-orange.jpg?b=1&s=170667a&w=0&k=20&c=3IzOqg17NdJ-0ZLFLMfkWIlcFyhUdJUjZqJ821iukyU="); */
+
+
+
+.orderscard{
+    background-image: url(/public/images/order.png);
+    background-size: cover;
+}
+.bookscard{
+    background-image: url("https://i0.wp.com/localprofile.com/wp-content/uploads/2016/06/books.jpg");
+    background-size: cover;
+}
+.donatebook{
+    background-image: url("https://png.pngtree.com/png-vector/20220520/ourmid/pngtree-cardboard-box-with-books-for-donations-png-image_4629707.png");
+    background-size: cover;
+    background-position: bottom;
+}
+.pendingbooks{
+    background-image: url("https://media.istockphoto.com/id/1178491737/vector/cardboard-box-with-books-for-donations-charity-colorful-vector-illustration.jpg?s=612x612&w=0&k=20&c=imqCEOz8STlw-Xbsc_AZ_ufQft4iqT111fjeDPnsRWg=");
+    background-size: cover;
+    background-position: bottom;}
+
+    .userscard{
+        background-image: url("https://st4.depositphotos.com/1364916/25416/v/600/depositphotos_254162752-stock-illustration-logo-people-in-a-hug.jpg");
+        background-size: cover;
+    } 
+
+
+    .icon-shape {
+        width: 48px;
+        height: 48px;
+        background-position: center;
+        border-radius: 0.5rem;
+      }
+      
+      .icon-shape i {
+        color: #fff;
+        opacity: 0.8;
+        top: 11px;
+        position: relative;
+      }
+      
+      .icon-shape .ni {
+        top: 14px;
+      }
+      
+      .icon-xxs {
+        width: 20px;
+        height: 20px;
+      }
+      
+      .icon-xxs i {
+        top: 0;
+        font-size: 0.65rem;
+      }
+      
+      .icon-xs {
+        width: 24px;
+        height: 24px;
+      }
+      
+      .icon-xs i {
+        top: -1px;
+        font-size: 0.75rem;
+      }
+      
+      .icon-sm {
+        width: 32px;
+        height: 32px;
+      }
+      
+      .icon-sm i {
+        top: 4px;
+        font-size: 0.875rem;
+      }
+      
+      .icon-md {
+        width: 48px;
+        height: 48px;
+      }
+      
+      .icon-md i {
+        top: 30%;
+        font-size: 1.125rem;
+      }
+      
+      .icon-md.icon-striped {
+        background-position-x: 85px;
+        background-position-y: 85px;
+      }
+      
+      .icon-md.icon-striped i {
+        top: 11%;
+        margin-left: -10px;
+        font-size: 0.875rem;
+      }
+      
+      .icon-lg {
+        width: 64px;
+        height: 64px;
+      }
+      
+      .icon-lg i {
+        top: 31%;
+        font-size: 1.5rem;
+      }
+      
+      .icon-lg.icon-striped {
+        background-position-x: 111px;
+        background-position-y: 111px;
+      }
+      
+      .icon-lg.icon-striped i {
+        top: 21%;
+        margin-left: -15px;
+      }
+      
+      .icon-xl {
+        width: 100px;
+        height: 100px;
+        border-radius: 0.5rem;
+      }
+      
+      .icon-xl i {
+        top: 35%;
+        font-size: 2.1rem;
+      }
+      
+      .icon-xl.icon-striped {
+        background-position-x: 80px;
+        background-position-y: 80px;
+      }
+      
+      .icon-xl.icon-striped i {
+        top: 30%;
+        margin-left: -15px;
+      }
+      
+      .info-horizontal {
+        text-align: left !important;
+      }
+      
+      .info-horizontal .icon {
+        float: left;
+      }
+      
+      .info-horizontal .description {
+        overflow: hidden;
+      }
+      
+      svg.text-primary .color-foreground {
+        fill: #EC407A;
+      }
+      
+      svg.text-primary .color-background {
+        fill: #D81B60;
+      }
+      
+      svg.text-secondary .color-foreground {
+        fill: #747b8a;
+      }
+      
+      svg.text-secondary .color-background {
+        fill: #495361;
+      }
+      
+      svg.text-info .color-foreground {
+        fill: #49a3f1;
+      }
+      
+      svg.text-info .color-background {
+        fill: #1A73E8;
+      }
+      
+      svg.text-warning .color-foreground {
+        fill: #FFA726;
+      }
+      
+      svg.text-warning .color-background {
+        fill: #FB8C00;
+      }
+      
+      svg.text-danger .color-foreground {
+        fill: #EF5350;
+      }
+      
+      svg.text-danger .color-background {
+        fill: #E53935;
+      }
+      
+      svg.text-success .color-foreground {
+        fill: #66BB6A;
+      }
+      
+      svg.text-success .color-background {
+        fill: #43A047;
+      }
+      
+      svg.text-dark .color-foreground {
+        fill: #42424a;
+      }
+      
+      svg.text-dark .color-background {
+        fill: #191919;
+      }
+      
+      html {
+        border: none !important;
+      }
+
+      .dashboardicons{
+        margin-top: -16px;
+      }
+      .dashboardheading{
+          float: right;
+          width: 180px;
+        
+          font-size: 20px;
+          color: black;
+          font-family: "Rufina", serif;
+      }
+      .headings{
+      
+        font-size: 22px;
+      
+        font-family: "Rufina", serif;
+        text-align: center;
+
+      }
+      .dashboarddiv{
+        box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
+      }
+      .dashboardshort{
+        background-color:#f07c29;
+      } 

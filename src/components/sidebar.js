@@ -53,7 +53,7 @@ function SideBar(){
       <li class="nav-item">
         <Link to='/permission' class="nav-link">
           <span class="icon-bg"><i class="mdi mdi-format-list-bulleted menu-icon"></i></span>
-          <span class="menu-title"> Book Permission</span>
+          <span class="menu-title">New Books</span>
         </Link>
       </li>
       

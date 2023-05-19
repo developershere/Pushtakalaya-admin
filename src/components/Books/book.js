@@ -3,31 +3,29 @@ import React, { useState } from 'react'
 
 
 import axios from "axios";
-
-
-
-import SideBar from "./sidebar";
-import Header from "./header";
-import Footer from "./Footer";
-import { apiEndPoint } from "../webapi/api";
 import { toast } from "react-toastify";
-import Spinner from "./Spinner/spinner";
+
 import InfiniteScroll from "react-infinite-scroll-component";
+import Header from "../header";
+import SideBar from "../sidebar";
+import { apiEndPoint } from "../../webapi/api";
+import Spinner from "../Spinner/spinner";
+import'./book.css'
+import { useNavigate } from "react-router-dom";
 
 
-function Product() {
+function Book() {
     const [data, setData] = useState([]);
     const [error, setError] = useState("");
     const [isLoading, setIsLoading] = useState(true);
     const [page, setPage] = useState(1);
     const [permission,setPermission] = useState("");
-    let permissionObject =useRef("");
-
-  const showPermission=async(event)=>{
-    setPermission(event);
-    console.log(permission);
-  }
-
+    const navigate= useNavigate();
+   
+    const viewDescription = (book) => {
+         window.alert(book)
+        navigate("/viewDescription", { state: { bookDetails: book } })
+      }
 
   
 
@@ -35,11 +33,12 @@ function Product() {
         try {
             const response = await axios.get(apiEndPoint.BOOK_LIST + `?page=${page}`);
             if (response.data.status) {
-                console.log(response.data.bookList);
+                console.log(response.data)
                 setData(response.data.bookList);
                 setData([...data, ...response.data.bookList]);
                 setPage(page + 1);
                 setIsLoading(false);
+                console.log(response.data.bookList)
             }
         } catch (err) {
             setError("oops Something Went Wrong")
@@ -50,22 +49,18 @@ function Product() {
 
 
     const removeBook = async (product) => {
-        console.log(product._id);
-
         try {
-            window.alert(product);
-            if(window.confirm("Are You Sure")){
-           let response= await axios.post(apiEndPoint.REMOVE_BOOK,{id:product._id,name:product.name,description:product.description,
-            author:product.author,language:product.language,edition:product.edition, publicationDate:product.publicationDate,pincode:product.pincode,cityId:product.cityId,
-            categoryId:product.categoryId,photos:product.photos,price:product.price,userId:product.userId,stateId:product.stateId,status:"false"});
-           console.log(response.data)
-            // toast.info("Category Remove Succesfully")
-            // let index =  categoryList.findIndex((category)=>category._id==categoryId);
-            // categoryList.splice(index,1);
-            //     setCategoryList([...categoryList]);
-            }
+                   data.map((book)=>{
+                    if(book._id==product._id)
+                        book.status = false
+                })
+               
+           let response= await axios.put(apiEndPoint.DELETE_BOOK+`${product._id}`)
+            toast.success("Book Deleted SuccesFully");
+            setData([...data]); 
         } catch (err) {
-            toast.setError("Something Went Wrong");
+            setError("Something Went Wrong");
+            toast.error("Something Went Wrong")
         }
 
     }
@@ -74,15 +69,14 @@ function Product() {
 
     useEffect(() => {
         fetchProduct();
-    }, []);
+    }, [data]);
 
 
 
     return <>
-    <Header />
+    <Header/>
       <div class="container-fluid page-body-wrapper">
-        <SideBar />
-
+        <SideBar/>
 
         <div class="main-panel">
         <div class="content-wrapper">
@@ -101,7 +95,7 @@ function Product() {
                     dataLength={data.length}
                     next={fetchProduct}
                     hasMore={data.length < 50}
-                    loader={<Spinner />}
+                    loader={<Spinner/>}
                     endMessage={<p>Data End...</p>}>
 
                     <table className="table">
@@ -112,23 +106,21 @@ function Product() {
                                 <th className="col-2">Book Name</th>
                                 <th className="col-2">Author</th>
                                 <th className="col-2">Price</th>
-                                <th className="col-2">Permission</th>
                                 <th className="col-2">Delete</th>
                             </tr>
                         </thead>
                         <tbody>
 
 
-                            {!error && data.map((product, index) => <tr>
+                            {!error && data.filter((product)=>product.status==true).map((product, index) => <tr>
                                 <td>{index + 1}</td>
-                                <td><img src={"https://drive.google.com/uc?export=view&id=" + product.photos.substring(32, product.photos.lastIndexOf("/"))} style={{ width: 60, height: 60 }} alt="" /></td>
+                                <td> {product.photos.split("@")[1] ? <img src={apiEndPoint.DISK_STORAGE+ product.photos.split("@")[1]} className="img-fluid bookimg"  onClick={()=>{viewDescription(product)}}  /> : <img src={"https://drive.google.com/uc?export=view&id=" + product.photos.substring(32,product.photos.lastIndexOf("/"))} className="img-fluid bookimg" onClick={()=>{viewDescription(product)}}  />}</td>
                                 <td>{product.name.substring(0, 20)}</td>
                                 <td>{product.author.substring(0, 10)}</td>
 
-                                <td>{product.price}</td>
-                              
-                                <td>{product.permission?"true":"false"}</td>
-                                <td><button className="btn btn-outline-danger"  onClick={() => removeBook(product)}>status</button></td>
+                                <td>{product.price}&#8377; </td>
+                            
+                                <td><button className="btn btn-outline-danger"  onClick={() => removeBook(product)}>Delete</button></td>
                             </tr>)}
 
 
@@ -145,4 +137,4 @@ function Product() {
     </>
 }
 
-export default Product;
+export default Book;
