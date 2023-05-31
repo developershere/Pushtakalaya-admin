@@ -90,15 +90,15 @@ function Book() {
 
             </div>
 
-            <div className="container tablecontainer mb-5">
+            <div className="container tablecontainer mb-5 "  >
                 <InfiniteScroll
                     dataLength={data.length}
                     next={fetchProduct}
-                    hasMore={data.length < 50}
+                    hasMore={data.length < 150}
                     loader={<Spinner/>}
                     endMessage={<p>Data End...</p>}>
 
-                    <table className="table">
+                    <table className="table"   >
                         <thead  className="table-thead text-white" >
                             <tr>
                                 <th className="col-1">Sno.</th>
@@ -109,7 +109,7 @@ function Book() {
                                 <th className="col-2">Delete</th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody >
 
 
                             {!error && data.filter((product)=>product.status==true).map((product, index) => <tr>

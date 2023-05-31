@@ -66,7 +66,7 @@ function ShippedOrder(){
                                 </tr>
                             </thead>
                             <tbody>
-                                {orderList.filter((item)=>item.status=="shipped").map((item, index) => <tr id={"row" + index} key={index}>
+                                {orderList.filter((item)=>item.status=="shipped").sort((b,a)=>b.date<a.date?1:-1).map((item, index) => <tr id={"row" + index} key={index}>
 
                                     <td>{index + 1}</td>
                                     <td>{item._id}</td>

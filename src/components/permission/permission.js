@@ -19,25 +19,18 @@ function Permission() {
 
 
   const changePermission=async(product)=>{
-   
-    console.log(!product.permission?true:false)
-    if(window.confirm("Are You Sure")){
-   let response= await axios.post(apiEndPoint.REMOVE_BOOK,{id:product._id,name:product.name,description:product.description,
-    author:product.author,language:product.language,edition:product.edition, publicationDate:product.publicationDate,pincode:452002,cityId:product.cityId,
-    categoryId:product.categoryId,photos:product.photos,price:product.price,userId:product.userId,stateId:product.stateId,status:product.status,permission:(!product.permission?true:false)});
-    console.log(response.data);
-    let index=data.findIndex((book)=>book._id==product._id)
-    data.splice(index,1)
-   setData([...data]);
-   console.log(response.data);
-  }
+   window.alert("change")
+   window.alert(product._id);
+   let response=await axios.put(apiEndPoint.PERMISSION_CHANGE+`${product._id}`);
+    toast.success("Permission Allowed Succesfully")
+
 
   }
   
 
     const fetchProduct = async () => {
         try {
-            const response = await axios.get(apiEndPoint.TOTAL_BOOKS);
+            const response = await axios.get(apiEndPoint.TOTAL_PENDING_BOOKS);
             if (response.data.status) {
                 console.log(response.data)
                 setData(response.data.bookList);
@@ -53,24 +46,20 @@ function Permission() {
 
 
     const removeBook = async (product) => {
-        console.log(product);
-
         try {
-            window.alert(product);
-            if(window.confirm("Are You Sure")){
-           let response= await axios.post(apiEndPoint.REMOVE_BOOK,{id:product._id,name:product.name,description:product.description,
-            author:product.author,language:product.language,edition:product.edition, publicationDate:product.publicationDate,pincode:product.pincode,cityId:product.cityId,
-            categoryId:product.categoryId,photos:product.photos,price:product.price,userId:product.userId,stateId:product.stateId,status:false});
-           console.log(response.data)
-            // toast.info("Category Remove Succesfully")
-            // let index =  categoryList.findIndex((category)=>category._id==categoryId);
-            // categoryList.splice(index,1);
-            //     setCategoryList([...categoryList]);
-            }
+           
+           
+                data.map((book)=>{
+                    if(book._id==product._id)
+                        book.status = false
+                })
+                if(window.confirm("Are You Sure")){
+           let response= await axios.put(apiEndPoint.DELETE_BOOK+`${product._id}`)
+            toast.success("Book Deleted SuccesFully");
+            setData([...data]); }
         } catch (err) {
             toast.setError("Something Went Wrong");
         }
-
     }
     const viewDescription = (book) => {
         window.alert(book)
@@ -80,7 +69,7 @@ function Permission() {
 
     useEffect(() => {
         fetchProduct();
-    }, []);
+    }, [data]);
 
 
 
@@ -129,7 +118,7 @@ function Permission() {
 
                                 <td>{product.price}</td>
                                 <td>{product.permission?<button className="btn btn-dark" >Deactive</button>:<button onClick={()=>changePermission(product)} className="btn btn-dark" >Active</button>}</td>
-                                <td><button className="btn btn-outline-danger"  onClick={() => removeBook(product)}>status</button></td>
+                                <td><button className="btn btn-outline-danger"  onClick={() => removeBook(product)}>Delete</button></td>
                             </tr>)}
                         </tbody>
                     </table>

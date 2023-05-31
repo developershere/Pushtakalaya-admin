@@ -14,12 +14,30 @@ import Footer from "../Footer";
 import'../Books/book.css'
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { Pagination } from "react-bootstrap";
+
 
 
 function FreeBook() {
     const[freeProduct,SetFreeProduct] = useState([]);
     const[freeerror,setFreeError] = useState(null)
+    const [pageData, setPageData] = useState([]);
+    const [page, setPage] = useState(1);
+    const [pageCount, setPageCount] = useState(0);
     const navigate = useNavigate();
+
+
+    const handleNext = () => {
+        if (page === pageCount) return page;
+        setPage(page + 1)
+    }
+
+
+    const handlePrevios = () => {
+        if (page === 1) return page;
+        setPage(page - 1)
+    }
+
 
     const loadFreeProduct=async()=>{
        try{
@@ -57,10 +75,25 @@ function FreeBook() {
         }
     }
 
+    useEffect(() => {
+        console.log(freeProduct.length)
+        const pagedatacount = Math.ceil(freeProduct.length / 10);
+        console.log(pagedatacount)
+        setPageCount(pagedatacount);
+
+        if (page) {
+            const LIMIT = 10;
+            const skip = LIMIT * page // 5 *2 = 10
+            const dataskip = freeProduct.slice(page === 1 ? 0 : skip - LIMIT, skip);
+            setPageData(dataskip)
+        }
+    }, [freeProduct])
+
+    
     useEffect(()=>{
        loadFreeProduct()
        removeBook()
-    },[freeProduct])
+    },[page])
 
 
     return <>
@@ -99,7 +132,7 @@ function FreeBook() {
                         <tbody>
 
 
-                            {!freeerror && freeProduct.filter((product)=>product.status==true).map((product, index) => <tr>
+                            { pageData.filter((product)=>product.status==true).map((product, index) => <tr>
                                 <td>{index + 1}</td>
                                 <td> {product.photos.split("@")[1] ? <img src={apiEndPoint.DISK_STORAGE+ product.photos.split("@")[1]} className="img-fluid bookimg"  onClick={()=>{viewDescription(product)}}  /> : <img src={"https://drive.google.com/uc?export=view&id=" + product.photos.substring(32,product.photos.lastIndexOf("/"))} className="img-fluid bookimg" onClick={()=>{viewDescription(product)}}  />}</td>
                                 <td>{product.name.substring(0, 20)}</td>
@@ -116,6 +149,21 @@ function FreeBook() {
                     </table>
               
             </div>
+            <div className='d-flex justify-content-end'>
+                                        <Pagination>
+                                            <Pagination.Prev onClick={handlePrevios} disabled={page === 1} />
+                                            {
+                                                Array(pageCount).fill(null).map((ele, index) => {
+                                                    return (
+                                                        <>
+                                                            <Pagination.Item active={page === index + 1 ? true : false} onClick={() => setPage(index + 1)}>{index + 1}</Pagination.Item>
+                                                        </>
+                                                    )
+                                                })
+                                            }
+                                            <Pagination.Next onClick={handleNext} disabled={page === pageCount} />
+                                        </Pagination>
+                                    </div>
 
         </div>
         <Footer/>
@@ -127,3 +175,5 @@ function FreeBook() {
 }
 
 export default FreeBook;
+
+
