@@ -43,24 +43,21 @@ function Permission() {
         }
     }
 
-
-
     const removeBook = async (product) => {
         try {
-           
-           
-                data.map((book)=>{
-                    if(book._id==product._id)
-                        book.status = false
-                })
-                if(window.confirm("Are You Sure")){
+                  
+               
            let response= await axios.put(apiEndPoint.DELETE_BOOK+`${product._id}`)
+           console.log(response);
             toast.success("Book Deleted SuccesFully");
-            setData([...data]); }
+            setData([...data]); 
         } catch (err) {
-            toast.setError("Something Went Wrong");
+            setError("Something Went Wrong");
+            toast.error("Something Went Wrong")
         }
+
     }
+
     const viewDescription = (book) => {
         window.alert(book)
        navigate("/viewDescription", { state: { bookDetails: book } })
@@ -109,7 +106,7 @@ function Permission() {
                         <tbody>
 
 
-                            {data.filter((product)=>product.permission==false).map((product, index) => <tr>
+                            {data.filter((product)=>product.permission==false && product.status==true).map((product, index) => <tr>
                                 <td>{index + 1}</td>
                                <td>{product.photos.split("@")[1] ? <img src={apiEndPoint.DISK_STORAGE+ product.photos.split("@")[1]} className="img-fluid  bookimg" onClick={()=>{viewDescription(product)}}/> : <img src={"https://drive.google.com/uc?export=view&id=" + product.photos.substring(32, product.photos.lastIndexOf("/"))} className="img-fluid  bookimg"  onClick={()=>{viewDescription(product)}} />}</td> 
                             

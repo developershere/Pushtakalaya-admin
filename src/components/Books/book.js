@@ -56,6 +56,7 @@ function Book() {
                 })
                
            let response= await axios.put(apiEndPoint.DELETE_BOOK+`${product._id}`)
+           console.log(response);
             toast.success("Book Deleted SuccesFully");
             setData([...data]); 
         } catch (err) {

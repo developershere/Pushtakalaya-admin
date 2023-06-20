@@ -54,7 +54,6 @@ function FreeBook() {
     
 
     const viewDescription = (book) => {
-        window.alert(book)
        navigate("/viewDescription", { state: { bookDetails: book } })
      }
 
@@ -66,25 +65,29 @@ function FreeBook() {
                     if(book._id==product._id)
                         book.status = false
                 })
-                if(window.confirm("Are You Sure")){
+                
            let response= await axios.put(apiEndPoint.DELETE_BOOK+`${product._id}`)
             toast.success("Book Deleted SuccesFully");
-            SetFreeProduct([...freeProduct]); }
+            SetFreeProduct([...freeProduct]); 
         } catch (err) {
             toast.setError("Something Went Wrong");
         }
     }
 
     useEffect(() => {
-        console.log(freeProduct.length)
-        const pagedatacount = Math.ceil(freeProduct.length / 10);
+        // console.log(freeProduct.length)
+        const arrdata =freeProduct.filter((book)=>book.status==true);
+        const pagedatacount = Math.ceil(arrdata.length / 10);
         console.log(pagedatacount)
         setPageCount(pagedatacount);
 
         if (page) {
             const LIMIT = 10;
             const skip = LIMIT * page // 5 *2 = 10
-            const dataskip = freeProduct.slice(page === 1 ? 0 : skip - LIMIT, skip);
+                                console.log(freeProduct);
+            // const dataskip = freeProduct.slice(page === 1 ? 0 : skip - LIMIT, skip);
+            const dataskip = arrdata.slice(page === 1 ? 0 : skip - LIMIT, skip);
+            console.log(dataskip);
             setPageData(dataskip)
         }
     }, [freeProduct])

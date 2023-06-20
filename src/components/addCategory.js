@@ -10,7 +10,7 @@ function  AddCategory({categories,setCategories}){
         try{
          let response = await axios.post("http://localhost:3000/category/add",{categoryName:category});
          if(response.data.status){
-            window.alert("Category Saved....");
+            // window.alert("Category Saved....");
             //  setCategories([...categories,response.data.category]) 
 
              
